@@ -24,22 +24,33 @@ function Gameboard() {
     return { makeMove }
 }
 
-function GameController{
+function GameController(){
     const player1 = "Player One"
     const player2 = "player Two"
+    const board = Gameboard();
+    const rounds = 0;
+
+    //Define players and symbols.
 
     const players = [
         {
             name: player1,
             symbol: "X"
-        }
+        },
     {
             name: player2,
             symbol: "O"
         }
     ]
+    // Player one always goes first
+    let myTurn = players[0]
 
+    // Cycles between players
+    const nextRound = () => {
+        myTurn = (myTurn === players[0]) ? players[1] : players[0]
+    }
 
+    return {nextRound}
 }
 
-const test = Gameboard()
+
