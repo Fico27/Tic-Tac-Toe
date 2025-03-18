@@ -28,7 +28,7 @@ function GameController(){
     const player1 = "Player One"
     const player2 = "player Two"
     const board = Gameboard();
-    const rounds = 0;
+    let rounds = 0;
 
     //Define players and symbols.
 
@@ -50,7 +50,18 @@ function GameController(){
         myTurn = (myTurn === players[0]) ? players[1] : players[0]
     }
 
-    return {nextRound}
+    const playRound = () => {
+        let userRowinput = prompt('Enter a row');
+        let usercolumninput = prompt('Enter a column');
+        let currentPlayer = myTurn.symbol
+
+        makeMove(userRowinput, usercolumninput, currentPlayer)
+        nextRound()
+        rounds++
+    }
+
+
+    return {nextRound, playRound}
 }
 
 
