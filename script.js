@@ -5,6 +5,9 @@ function Gameboard() {
     let rows = 3;
     let gameboard = [];
 
+    
+    const gameContainer = document.querySelector('.gameboard')
+
     // Here I need to create the rows
     for (let i = 0; i < rows; i++) {
         // Creates an empty array at that index of i (Makes a row)
@@ -14,7 +17,25 @@ function Gameboard() {
             gameboard[i].push("")
         }
     }
+
+    for(let i = 0; i < 9; i++){
+        const createBox = document.createElement('div')
+        createBox.className = `test box${i + 1}`
+        createBox.addEventListener('click', )
+        gameContainer.appendChild(createBox);
+    }
+
+
+    const playerMove = (){
+
+    }
+
     return {gameboard}
+}
+
+
+function GameDisplay(){
+
 }
 
 function GameController(){
