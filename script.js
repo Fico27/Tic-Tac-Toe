@@ -3,25 +3,22 @@ function Gameboard() {
 
     let columns = 3;
     let rows = 3;
-    let board = [];
+    let gameboard = [];
 
     // Here I need to create the rows
 
     for (let i = 0; i < rows; i++) {
         // Creates an empty array at that index of i (Makes a row)
-        board[i] = []
+        gameboard[i] = []
         for (let j = 0; j < columns; j++) {
             // in row i push an empty string into each column
-            board[i].push(" ")
+            gameboard[i].push("")
         }
     }
 
 
-    const makeMove = (row, column, player) => {
-        board[row][column] = player
-        console.table(board)
-    }
-    return { makeMove }
+
+    return {gameboard}
 }
 
 function GameController(){
@@ -42,12 +39,27 @@ function GameController(){
             symbol: "O"
         }
     ]
+
+    const makeMove = (row, column, player) => {
+       
+        if(board.gameboard[row][column] !== ''){
+            alert("That spot is already in use. Take an open spot!")
+            console.table(board.gameboard)
+            playRound()
+        } else {
+            board.gameboard[row][column] = player;
+            console.table(board.gameboard)
+        }
+        
+    }
+
     // Player one always goes first
     let myTurn = players[0]
 
     // Cycles between players
     const nextRound = () => {
         myTurn = (myTurn === players[0]) ? players[1] : players[0]
+        playRound()
     }
 
     const playRound = () => {
