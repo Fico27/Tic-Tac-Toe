@@ -18,17 +18,21 @@ function Gameboard() {
         }
     }
 
+    // const playerMove = (e) =>{
+    //     e.target.innerHTML = "X"
+    // }
+
     for(let i = 0; i < 9; i++){
         const createBox = document.createElement('div')
         createBox.className = `test box${i + 1}`
-        createBox.addEventListener('click', )
+        createBox.addEventListener('click', (e) => {
+            e.target.innerHTML = "X"
+        } )
         gameContainer.appendChild(createBox);
     }
 
 
-    const playerMove = (){
 
-    }
 
     return {gameboard}
 }

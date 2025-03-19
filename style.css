@@ -8,9 +8,12 @@
 }
 
 .test {
+    display: flex;
     border: 1px solid black;
     height: 100px;
     width: 100px;
+    align-items: center;
+    justify-content: center;
 }
 
 .gameboard{
