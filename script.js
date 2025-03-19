@@ -55,7 +55,12 @@ function GameController(){
     const nextRound = () => {
         myTurn = (myTurn === players[0]) ? players[1] : players[0]
         winCondition()
-        playRound()
+        if (rounds === 9){
+            alert(`Game Over!`)
+        } else {
+            playRound()
+        }
+        
     }
 
     const playRound = () => {
@@ -63,9 +68,12 @@ function GameController(){
         let usercolumninput = prompt('Enter a column');
         let currentPlayer = myTurn.symbol
 
-        makeMove(userRowinput, usercolumninput, currentPlayer)
-        nextRound()
         rounds++
+        console.log(rounds)
+        makeMove(userRowinput, usercolumninput, currentPlayer)
+
+        nextRound()
+
     }
 
     const winCondition = () =>{
@@ -77,14 +85,14 @@ function GameController(){
             } else if ((board.gameboard[0][i] && board.gameboard[0][i] === board.gameboard[1][i]) && board.gameboard[1][i] === board.gameboard[2][i]){
                 alert(`${board.gameboard[0][i]} wins!`)
             } else if ((board.gameboard[0][0] && board.gameboard[0][0] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][2]){
-                alert(`${board.gameboard[0][i]} wins!`)
+                alert(`${board.gameboard[1][1]} wins!`)
             } else if ((board.gameboard[0][2] && board.gameboard[0][2] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][0]){
-                alert(`${board.gameboard[0][i]} wins!`)
+                alert(`${board.gameboard[1][1]} wins!`)
             }
-
-
-
         }
+            if(rounds === 9){
+                alert(`its a tie!`)
+            }
     }
 
     return {nextRound, playRound}
