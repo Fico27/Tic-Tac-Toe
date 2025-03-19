@@ -6,7 +6,6 @@ function Gameboard() {
     let gameboard = [];
 
     // Here I need to create the rows
-
     for (let i = 0; i < rows; i++) {
         // Creates an empty array at that index of i (Makes a row)
         gameboard[i] = []
@@ -15,9 +14,6 @@ function Gameboard() {
             gameboard[i].push("")
         }
     }
-
-
-
     return {gameboard}
 }
 
@@ -28,7 +24,6 @@ function GameController(){
     let rounds = 0;
 
     //Define players and symbols.
-
     const players = [
         {
             name: player1,
@@ -59,6 +54,7 @@ function GameController(){
     // Cycles between players
     const nextRound = () => {
         myTurn = (myTurn === players[0]) ? players[1] : players[0]
+        winCondition()
         playRound()
     }
 
@@ -72,6 +68,24 @@ function GameController(){
         rounds++
     }
 
+    const winCondition = () =>{
+        // const bord = board.gameboard
+        // logic for rows
+        for(let i = 0; i < 3; i ++){
+            if((board.gameboard[i][0] && board.gameboard[i][0] === board.gameboard[i][1]) && board.gameboard[i][1] === board.gameboard[i][2]){
+                alert(`wins!`)
+            } else if ((board.gameboard[0][i] && board.gameboard[0][i] === board.gameboard[1][i]) && board.gameboard[1][i] === board.gameboard[2][i]){
+                alert(`${board.gameboard[0][i]} wins!`)
+            } else if ((board.gameboard[0][0] && board.gameboard[0][0] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][2]){
+                alert(`${board.gameboard[0][i]} wins!`)
+            } else if ((board.gameboard[0][2] && board.gameboard[0][2] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][0]){
+                alert(`${board.gameboard[0][i]} wins!`)
+            }
+
+
+
+        }
+    }
 
     return {nextRound, playRound}
 }
