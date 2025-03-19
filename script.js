@@ -54,10 +54,13 @@ function GameController(){
     // Cycles between players
     const nextRound = () => {
         myTurn = (myTurn === players[0]) ? players[1] : players[0]
-        winCondition()
+        // winCondition()
         if (rounds === 9){
+            alert(`It's a tie!`)
             alert(`Game Over!`)
-        } else {
+        }  else if (winCondition() === true){
+            alert(`Game Over!`)
+        }else {
             playRound()
         }
         
@@ -65,12 +68,12 @@ function GameController(){
 
     const playRound = () => {
         let userRowinput = prompt('Enter a row');
-        let usercolumninput = prompt('Enter a column');
+        let userColumninput = prompt('Enter a column');
         let currentPlayer = myTurn.symbol
 
         rounds++
         console.log(rounds)
-        makeMove(userRowinput, usercolumninput, currentPlayer)
+        makeMove(userRowinput, userColumninput, currentPlayer)
 
         nextRound()
 
@@ -81,18 +84,19 @@ function GameController(){
         // logic for rows
         for(let i = 0; i < 3; i ++){
             if((board.gameboard[i][0] && board.gameboard[i][0] === board.gameboard[i][1]) && board.gameboard[i][1] === board.gameboard[i][2]){
-                alert(`wins!`)
+                alert(`${board.gameboard[i][0]}wins!`)
+                return true
             } else if ((board.gameboard[0][i] && board.gameboard[0][i] === board.gameboard[1][i]) && board.gameboard[1][i] === board.gameboard[2][i]){
                 alert(`${board.gameboard[0][i]} wins!`)
+                return true
             } else if ((board.gameboard[0][0] && board.gameboard[0][0] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][2]){
                 alert(`${board.gameboard[1][1]} wins!`)
+                return true
             } else if ((board.gameboard[0][2] && board.gameboard[0][2] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][0]){
                 alert(`${board.gameboard[1][1]} wins!`)
+                return true
             }
         }
-            if(rounds === 9){
-                alert(`its a tie!`)
-            }
     }
 
     return {nextRound, playRound}
