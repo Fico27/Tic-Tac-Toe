@@ -1,4 +1,3 @@
-
 function Gameboard() {
 
     let columns = 3;
@@ -17,13 +16,10 @@ function Gameboard() {
     return { gameboard }
 }
 
-
 function Gamedisplay() {
     const gameStart = Gamecontroller()
 
     const gameContainer = document.querySelector('.gameboard')
-
-
 
     for (let i = 0; i < 9; i++) {
         const createBox = document.createElement('div')
@@ -35,23 +31,14 @@ function Gamedisplay() {
         createBox.dataset.row = row;
         createBox.dataset.column = column;
 
-
-
-
         createBox.addEventListener('click', gameStart.enableBoard)
-        //     if(!e.target.innerHTML){
-        //     e.target.innerHTML = `${gameStart.currentPlayer().symbol}`
-        //     gameStart.playRound(e.target)
-        // }
-
         gameContainer.appendChild(createBox);
     }
 }
 
-
-
 function Gamecontroller() {
     const startButton = document.querySelector("button");
+    const resetButton = document.querySelector(".reset")
     startButton.style.display = 'none';
     const whosTurn = document.querySelector(".turn")
     const player1 = "Player One"
@@ -89,11 +76,8 @@ function Gamecontroller() {
 
     const currentPlayer = () => myTurn
 
-
-
     const playRound = (target) => {
         let currentPlayer = myTurn.symbol
-
 
         rounds++
         console.log(rounds)
@@ -102,8 +86,13 @@ function Gamecontroller() {
         if (!winCondition()) {
             myTurn = (myTurn === players[0]) ? players[1] : players[0]
             whosTurn.innerHTML = `It is ${myTurn.name}'s turn!`;
-        }
+        } 
 
+        if (!winCondition() && rounds ===9){
+            whosTurn.innerHTML = `It is a TIE!`;
+            disableBoard()
+            resetButton.style.display = "block";
+        }
     }
 
     const enableBoard = (e) => {
@@ -120,32 +109,49 @@ function Gamecontroller() {
         })
     }
 
+    const resetGame = () => {
+        const gameContainer = document.querySelector('.gameboard')
+        whosTurn.innerHTML = ""
+        board
+        console.table(board.gameboard)
+        
+        while (gameContainer.firstChild) {
+            gameContainer.removeChild(gameContainer.firstChild);
+        }
+
+        Gamedisplay()
+        resetButton.style.display = "none";
+
+    }
+
     const winCondition = () => {
         // logic for rows
         for (let i = 0; i < 3; i++) {
             if ((board.gameboard[i][0] && board.gameboard[i][0] === board.gameboard[i][1]) && board.gameboard[i][1] === board.gameboard[i][2]) {
                 whosTurn.innerHTML = `${myTurn.name} WINS!`
                 disableBoard()
+                resetButton.style.display = "block";
                 return true
             } else if ((board.gameboard[0][i] && board.gameboard[0][i] === board.gameboard[1][i]) && board.gameboard[1][i] === board.gameboard[2][i]) {
                 whosTurn.innerHTML = `${myTurn.name} WINS!`
                 disableBoard()
+                resetButton.style.display = "block";
                 return true
             } else if ((board.gameboard[0][0] && board.gameboard[0][0] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][2]) {
                 whosTurn.innerHTML = `${myTurn.name} WINS!`
                 disableBoard()
+                resetButton.style.display = "block";
                 return true
             } else if ((board.gameboard[0][2] && board.gameboard[0][2] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][0]) {
                 whosTurn.innerHTML = `${myTurn.name} WINS!`
                 disableBoard()
+                resetButton.style.display = "block";
                 return true
-            } else if (rounds === 9) {
-                whosTurn.innerHTML = `It is a TIE!`;
-                disableBoard()
-                return true;
-            }
+            } 
+            
         }
+
     }
 
-    return { playRound, currentPlayer, enableBoard }
+    return { playRound, currentPlayer, enableBoard, resetGame }
 }
