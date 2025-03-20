@@ -1,31 +1,20 @@
 
 function Gameboard() {
 
-    // let columns = 3;
-    // let rows = 3;
-    // let gameboard = [];
+    let columns = 3;
+    let rows = 3;
+    let gameboard = [];
 
-    
-    
-
-    // // Here I need to create the rows
-    // for (let i = 0; i < rows; i++) {
-    //     // Creates an empty array at that index of i (Makes a row)
-    //     gameboard[i] = []
-    //     for (let j = 0; j < columns; j++) {
-    //         // in row i push an empty string into each column
-    //         gameboard[i].push("")
-    //     }
-    // }
-
-    // const playerMove = (e) =>{
-    //     e.target.innerHTML = "X"
-    // }
-
-
-
-
-    // return {gameboard}
+    // Here I need to create the rows
+    for (let i = 0; i < rows; i++) {
+        // Creates an empty array at that index of i (Makes a row)
+        gameboard[i] = []
+        for (let j = 0; j < columns; j++) {
+            // in row i push an empty string into each column
+            gameboard[i].push("")
+        }
+    }
+    return {gameboard}
 }
 
 
@@ -37,21 +26,33 @@ function Gamedisplay(){
     for(let i = 0; i < 9; i++){
         const createBox = document.createElement('div')
         createBox.className = `test box${i + 1}`
+
+        /* assigns each created box with a row and column */
+        const row = Math.floor(i / 3); 
+        const column = (i % 3);     
+        createBox.dataset.row = row;
+        createBox.dataset.column = column;
+
         createBox.addEventListener('click', (e) => {
+            if(!e.target.innerHTML){
             e.target.innerHTML = `${gameStart.currentPlayer().symbol}`
-            gameStart.nextRound()
+            gameStart.playRound(e.target)
+        }
         } )
         gameContainer.appendChild(createBox);
     }
-
+    return { gameContainer}
 }
 
 
 
 function Gamecontroller(){
+    const startButton = document.querySelector("button");
+    startButton.style.display = 'none';
+
     const player1 = "Player One"
     const player2 = "player Two"
-    // const board = Gameboard();
+    const board = Gameboard();
     let rounds = 0;
 
     //Define players and symbols.
@@ -66,18 +67,18 @@ function Gamecontroller(){
         }
     ]
 
-    // const makeMove = (row, column, player) => {
+    const makeMove = (row, column, player) => {
        
-    //     if(board.gameboard[row][column] !== ''){
-    //         alert("That spot is already in use. Take an open spot!")
-    //         console.table(board.gameboard)
-    //         playRound()
-    //     } else {
-    //         board.gameboard[row][column] = player;
-    //         console.table(board.gameboard)
-    //     }
+        if(board.gameboard[row][column] !== ''){
+            alert("That spot is already in use. Take an open spot!")
+            console.table(board.gameboard)
+            playRound()
+        } else {
+            board.gameboard[row][column] = player;
+            console.table(board.gameboard)
+        }
         
-    // }
+    }
 
     // Player one always goes first
     let myTurn = players[0]
@@ -93,31 +94,26 @@ function Gamecontroller(){
             alert(`Game Over!`)
         }  else if (winCondition() === true){
             alert(`Game Over!`)
-        }else {
-            playRound()
         }
         
     }
 
-    const playRound = () => {
-        // let userRowinput = prompt('Enter a row');
-        // let userColumninput = prompt('Enter a column');
+    const playRound = (target) => {
         let currentPlayer = myTurn.symbol
 
         rounds++
         console.log(rounds)
-        makeMove(userRowinput, userColumninput, currentPlayer)
+        makeMove(target.dataset.row, target.dataset.column, currentPlayer)
 
         nextRound()
 
     }
 
     const winCondition = () =>{
-        // const bord = board.gameboard
         // logic for rows
         for(let i = 0; i < 3; i ++){
             if((board.gameboard[i][0] && board.gameboard[i][0] === board.gameboard[i][1]) && board.gameboard[i][1] === board.gameboard[i][2]){
-                alert(`${board.gameboard[i][0]}wins!`)
+                alert(`${board.gameboard[i][0]} wins!`)
                 return true
             } else if ((board.gameboard[0][i] && board.gameboard[0][i] === board.gameboard[1][i]) && board.gameboard[1][i] === board.gameboard[2][i]){
                 alert(`${board.gameboard[0][i]} wins!`)
