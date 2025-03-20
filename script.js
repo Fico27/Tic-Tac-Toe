@@ -125,7 +125,7 @@ function Gamecontroller() {
     }
 
     const winCondition = () => {
-        // logic for rows
+        // logic for rows, columns and diag
         for (let i = 0; i < 3; i++) {
             if ((board.gameboard[i][0] && board.gameboard[i][0] === board.gameboard[i][1]) && board.gameboard[i][1] === board.gameboard[i][2]) {
                 whosTurn.innerHTML = `${myTurn.name} WINS!`

@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #A7D3A6;
 }
 
 .test {
@@ -15,6 +16,7 @@
     align-items: center;
     justify-content: center;
     font-size: 40px;
+    background-color: #ADD2C2;
 }
 
 .gameboard{
@@ -28,6 +30,15 @@
 
 }
 
+.gameboard > div {
+    color: #604D53
+}
+
 .reset{
     margin-bottom: 10px;
+}
+
+button{
+    padding: 10px 15px;
+    background-color: #D4C685;
 }
