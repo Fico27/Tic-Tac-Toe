@@ -41,19 +41,23 @@ function Gamecontroller() {
     const resetButton = document.querySelector(".reset")
     startButton.style.display = 'none';
     const whosTurn = document.querySelector(".turn")
-    const player1 = "Player One"
-    const player2 = "Player Two"
+    // const player1 = "Player One"
+    // const player2 = "Player Two"
+    const player1 = document.querySelector("#player1")
+    const player2 = document.querySelector("#player2")
+    player1.style.display = "none"
+    player2.style.display = "none"
     const board = Gameboard();
     let rounds = 0;
 
     //Define players and symbols.
     const players = [
         {
-            name: player1,
+            name: player1.value,
             symbol: "X"
         },
         {
-            name: player2,
+            name: player2.value,
             symbol: "O"
         }
     ]
