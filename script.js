@@ -41,7 +41,6 @@ function Gamedisplay(){
         } )
         gameContainer.appendChild(createBox);
     }
-    return { gameContainer}
 }
 
 
@@ -49,9 +48,9 @@ function Gamedisplay(){
 function Gamecontroller(){
     const startButton = document.querySelector("button");
     startButton.style.display = 'none';
-
+    const whosTurn = document.querySelector(".turn")
     const player1 = "Player One"
-    const player2 = "player Two"
+    const player2 = "Player Two"
     const board = Gameboard();
     let rounds = 0;
 
@@ -85,50 +84,46 @@ function Gamecontroller(){
 
     const currentPlayer = () => myTurn
 
-    // Cycles between players
-    const nextRound = () => {
-        myTurn = (myTurn === players[0]) ? players[1] : players[0]
-        // winCondition()
-        if (rounds === 9){
-            alert(`It's a tie!`)
-            alert(`Game Over!`)
-        }  else if (winCondition() === true){
-            alert(`Game Over!`)
-        }
-        
-    }
+
 
     const playRound = (target) => {
         let currentPlayer = myTurn.symbol
-
+        
+       
         rounds++
         console.log(rounds)
         makeMove(target.dataset.row, target.dataset.column, currentPlayer)
-
-        nextRound()
-
+        
+        if(!winCondition()){
+        myTurn = (myTurn === players[0]) ? players[1] : players[0]
+        whosTurn.innerHTML = `It is ${myTurn.name}'s turn!`;
+        }
+        
     }
 
     const winCondition = () =>{
         // logic for rows
         for(let i = 0; i < 3; i ++){
             if((board.gameboard[i][0] && board.gameboard[i][0] === board.gameboard[i][1]) && board.gameboard[i][1] === board.gameboard[i][2]){
-                alert(`${board.gameboard[i][0]} wins!`)
+                 whosTurn.innerHTML = `${myTurn.name} WINS!`
                 return true
             } else if ((board.gameboard[0][i] && board.gameboard[0][i] === board.gameboard[1][i]) && board.gameboard[1][i] === board.gameboard[2][i]){
-                alert(`${board.gameboard[0][i]} wins!`)
+                whosTurn.innerHTML = `${myTurn.name} WINS!`
                 return true
             } else if ((board.gameboard[0][0] && board.gameboard[0][0] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][2]){
-                alert(`${board.gameboard[1][1]} wins!`)
+                whosTurn.innerHTML = `${myTurn.name} WINS!`
                 return true
             } else if ((board.gameboard[0][2] && board.gameboard[0][2] === (board.gameboard[1][1])) && board.gameboard[1][1] === board.gameboard[2][0]){
-                alert(`${board.gameboard[1][1]} wins!`)
+                whosTurn.innerHTML = `${myTurn.name} WINS!`
                 return true
+            } else if (rounds === 9){
+                whosTurn.innerHTML = `It is a TIE!`;
+                return true;
             }
         }
     }
 
-    return {nextRound, playRound, currentPlayer}
+    return {playRound, currentPlayer}
 }
 
 
